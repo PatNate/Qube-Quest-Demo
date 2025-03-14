@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhwy6sw0js7mc"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_i081m"]
+[ext_resource type="Texture2D" uid="uid://dnj8y7efmsdml" path="res://assets/sprites/Bullet.png" id="1_p2mc4"]
+[ext_resource type="PackedScene" uid="uid://cjr0ewhlpqbvp" path="res://scenes/deathzone.tscn" id="3_ikah2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ku1pb"]
+radius = 1.97299
+height = 8.0
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_i081m")
+
+[node name="Bullet" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(0, -1.49012e-08)
+scale = Vector2(0.8, 0.55)
+texture = ExtResource("1_p2mc4")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+position = Vector2(1, 1)
+scale = Vector2(3.475, 3.10312)
+
+[node name="Deathzone" parent="." instance=ExtResource("3_ikah2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
+position = Vector2(-0.0442677, -0.241985)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ku1pb")
+debug_color = Color(0.814843, 0.383203, 0.378316, 0.42)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

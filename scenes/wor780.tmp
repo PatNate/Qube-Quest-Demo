@@ -1,0 +1,179 @@
+[gd_scene load_steps=17 format=4 uid="uid://nef11lo26bow"]
+
+[ext_resource type="Texture2D" uid="uid://qsqvk2w1kibx" path="res://assets/LEGO 1x1.png" id="1_eweg6"]
+[ext_resource type="Texture2D" uid="uid://db4btvyawjsib" path="res://assets/Sky 2.png" id="1_rjpy2"]
+[ext_resource type="Texture2D" uid="uid://dswnspmddlxdi" path="res://assets/LEGO 2x2.png" id="2_0ajqf"]
+[ext_resource type="Texture2D" uid="uid://qsok1222cfak" path="res://assets/Goal Flag.png" id="3_frrrh"]
+[ext_resource type="PackedScene" uid="uid://wo7ru8fps7to" path="res://scenes/player.tscn" id="3_rt6cb"]
+[ext_resource type="LabelSettings" uid="uid://bgqp6l6txg7dr" path="res://assets/LabelSettings/1.tres" id="4_2umx3"]
+[ext_resource type="PackedScene" uid="uid://cjr0ewhlpqbvp" path="res://scenes/deathzone.tscn" id="6_6whgj"]
+[ext_resource type="PackedScene" uid="uid://y4c3gyncpole" path="res://scenes/coin.tscn" id="7_twbd6"]
+[ext_resource type="PackedScene" uid="uid://ctgtacx1wvs3d" path="res://scripts/fleebo.tscn" id="8_sie0c"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67ck1"]
+texture = ExtResource("1_eweg6")
+texture_region_size = Vector2i(8, 10)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+1:0/0 = 0
+1:1/0 = 0
+1:2/0 = 0
+1:3/0 = 0
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1c75d"]
+texture = ExtResource("2_0ajqf")
+texture_region_size = Vector2i(17, 10)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.02167, -5, 4.06586, -5, 4.0625, 5, -4, 5)
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8.5, -5, 8.5, -5, 8.5, 5, -8.5, 5)
+1:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+0:1/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8.5, -5, 8.5, -5, 8.5, 5, -8.5, 5)
+1:1/0 = 0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+0:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8.5, -5, 8.5, -5, 8.5, 5, -8.5, 5)
+1:2/0 = 0
+1:3/0 = 0
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0625, -5, 4.125, -5, 4.0625, 5, -4.0625, 5)
+0:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8.5, -5, 8.5, -5, 8.5, 5, -8.5, 5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1xq1k"]
+texture = ExtResource("3_frrrh")
+texture_region_size = Vector2i(17, 10)
+0:0/0 = 0
+0:0/0/physics_layer_2/polygon_0/points = PackedVector2Array(1.5, 3, 7.48438, 3.00781, 7.50781, 5, 1.5, 5)
+0:0/0/physics_layer_2/polygon_1/points = PackedVector2Array(3.49219, -5, 4.48438, -5, 4.49219, -3.99219, 4.50781, 3.01563, 3.50781, 3.00781)
+
+[sub_resource type="TileSet" id="TileSet_h3y6k"]
+tile_size = Vector2i(17, 10)
+physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 1
+physics_layer_2/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_67ck1")
+sources/1 = SubResource("TileSetAtlasSource_1c75d")
+sources/2 = SubResource("TileSetAtlasSource_1xq1k")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwj3v"]
+size = Vector2(154.297, 400.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n1x4b"]
+size = Vector2(651.5, 110)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cxpfc"]
+font_size = 12
+font_color = Color(0, 0.647059, 0.388235, 1)
+
+[node name="World" type="Node2D"]
+
+[node name="Level 1" type="Node2D" parent="."]
+
+[node name="playerstart" type="Node2D" parent="Level 1"]
+position = Vector2(4, -82)
+
+[node name="Background" type="Node2D" parent="Level 1"]
+
+[node name="Sky6" type="Sprite2D" parent="Level 1/Background"]
+position = Vector2(409, -44)
+scale = Vector2(0.745344, 1.87)
+texture = ExtResource("1_rjpy2")
+
+[node name="Sky2" type="Sprite2D" parent="Level 1/Background"]
+position = Vector2(-119, -127)
+scale = Vector2(0.863333, 0.9)
+texture = ExtResource("1_rjpy2")
+
+[node name="Sky3" type="Sprite2D" parent="Level 1/Background"]
+position = Vector2(155.25, -127)
+scale = Vector2(0.965, 0.9)
+texture = ExtResource("1_rjpy2")
+
+[node name="Sky4" type="Sprite2D" parent="Level 1/Background"]
+position = Vector2(155.75, 53)
+scale = Vector2(0.961666, 0.9)
+texture = ExtResource("1_rjpy2")
+
+[node name="Sky5" type="Sprite2D" parent="Level 1/Background"]
+position = Vector2(-118, 53)
+scale = Vector2(0.863333, 0.9)
+texture = ExtResource("1_rjpy2")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Level 1"]
+tile_map_data = PackedByteArray("AAD//wAAAQAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAQAAAAAAAAACAP//AQAAAAAAAAD/////AQABAAAAAAAAAP//AQABAAAAAAABAP//AQABAAAAAAACAP7/AQABAAAAAAACAAAAAQAAAAAAAAAGAP7/AQAAAAAAAAAGAP3/AQABAAAAAAD+/wAAAQAAAAAAAAADAP//AQAAAAAAAAAHAP7/AQAAAAAAAAAHAP3/AQABAAAAAAADAP7/AQABAAAAAAD+////AQABAAAAAAAJAPv/AQAAAAAAAAAKAPv/AQAAAAAAAAAKAPr/AQABAAAAAAAJAPr/AQABAAAAAAAHAPj/AQAAAAAAAAAGAPj/AQAAAAAAAAAFAPj/AQAAAAAAAAAHAPf/AQABAAAAAAAGAPf/AQABAAAAAAAFAPf/AQABAAAAAAACAPb/AQAAAAAAAAADAPb/AQAAAAAAAAADAPX/AQABAAAAAAACAPX/AgAAAAAAAAAEAP//AQAAAAAAAAAEAP7/AQABAAAAAAA=")
+tile_set = SubResource("TileSet_h3y6k")
+
+[node name="WorldBorders and Deathzone" type="Node2D" parent="Level 1"]
+
+[node name="Deathzone" parent="Level 1/WorldBorders and Deathzone" instance=ExtResource("6_6whgj")]
+position = Vector2(54, 78)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Level 1/WorldBorders and Deathzone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level 1/WorldBorders and Deathzone/StaticBody2D"]
+position = Vector2(-189, 0)
+shape = SubResource("RectangleShape2D_xwj3v")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Level 1/WorldBorders and Deathzone/StaticBody2D/CollisionShape2D"]
+position = Vector2(-0.468994, -15.5625)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level 1/WorldBorders and Deathzone/StaticBody2D/CollisionShape2D/StaticBody2D"]
+position = Vector2(250.469, -201.438)
+shape = SubResource("RectangleShape2D_n1x4b")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Level 1/WorldBorders and Deathzone"]
+position = Vector2(11.7653, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level 1/WorldBorders and Deathzone/StaticBody2D2"]
+position = Vector2(301.235, 12)
+shape = SubResource("RectangleShape2D_xwj3v")
+
+[node name="Text" type="Node2D" parent="Level 1"]
+
+[node name="Controls1" type="Label" parent="Level 1/Text"]
+offset_left = -88.0
+offset_top = -30.0
+offset_right = 15.0
+offset_bottom = -16.0
+text = "W & D or <&> to Walk"
+label_settings = ExtResource("4_2umx3")
+
+[node name="Controls2" type="Label" parent="Level 1/Text"]
+offset_left = 54.0
+offset_top = -55.0
+offset_right = 118.0
+offset_bottom = -30.0
+text = "W, Space or ^
+to Jump"
+label_settings = ExtResource("4_2umx3")
+
+[node name="Win" type="Label" parent="Level 1/Text"]
+offset_left = 36.0
+offset_top = -127.0
+offset_right = 88.0
+offset_bottom = -104.0
+text = "Win!"
+label_settings = SubResource("LabelSettings_cxpfc")
+
+[node name="Coins" type="Node2D" parent="Level 1"]
+
+[node name="Coin" parent="Level 1/Coins" instance=ExtResource("7_twbd6")]
+position = Vector2(25, -22)
+
+[node name="Coin2" parent="Level 1/Coins" instance=ExtResource("7_twbd6")]
+position = Vector2(84, -110)
+
+[node name="Enemies" type="Node2D" parent="Level 1"]
+
+[node name="Fleebo" parent="Level 1/Enemies" instance=ExtResource("8_sie0c")]
+position = Vector2(129, -88)
+
+[node name="Player" parent="." instance=ExtResource("3_rt6cb")]
+position = Vector2(4, -82)

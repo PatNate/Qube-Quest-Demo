@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7n7mkqofewsk"]
+
+[ext_resource type="Script" path="res://scripts/goal_flag.gd" id="1_jtyov"]
+[ext_resource type="Texture2D" uid="uid://qsok1222cfak" path="res://assets/sprites/Goal Flag.png" id="1_sj56e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gjajx"]
+radius = 4.03777
+height = 11.2722
+
+[node name="GoalFlag" type="Area2D"]
+script = ExtResource("1_jtyov")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_sj56e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.7612, 0.523819)
+shape = SubResource("CapsuleShape2D_gjajx")
+debug_color = Color(0, 0.6, 0.329412, 0.419608)
+
+[node name="Destanation" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

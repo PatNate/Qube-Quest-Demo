@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbyecsp86jyhs"]
+
+[ext_resource type="Script" path="res://scripts/teleporter.gd" id="1_b0cyy"]
+[ext_resource type="Texture2D" uid="uid://cuqprik4jdu1p" path="res://assets/sprites/Colour - Deep Blue.png" id="2_jais6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p3drw"]
+size = Vector2(21.2612, 21.3491)
+
+[node name="Teleporter" type="Area2D"]
+script = ExtResource("1_b0cyy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_jais6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_p3drw")
+debug_color = Color(0, 0.6, 0.329412, 0.419608)
+
+[node name="Destanation" type="Marker2D" parent="."]
+position = Vector2(22.9986, -3.18323)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

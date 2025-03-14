@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bgqp6l6txg7dr"]
+
+[ext_resource type="FontFile" uid="uid://uw7uomxtysd5" path="res://assets/fonts/alagard.ttf" id="1_ovxe8"]
+
+[resource]
+line_spacing = -3.0
+font = ExtResource("1_ovxe8")
+font_size = 64
+font_color = Color(0, 0.440336, 0, 1)

@@ -1,0 +1,141 @@
+[gd_scene load_steps=10 format=3 uid="uid://wo7ru8fps7to"]
+
+[ext_resource type="PackedScene" uid="uid://b1mt8wq6682mq" path="res://scenes/gun.tscn" id="2_0qw11"]
+[ext_resource type="Texture2D" uid="uid://bclsixktvmuxj" path="res://assets/sprites/Player (1).png" id="2_ux70b"]
+[ext_resource type="Texture2D" uid="uid://dm6jaqb875meo" path="res://assets/sprites/Player.png" id="3_ra52d"]
+
+[sub_resource type="GDScript" id="GDScript_f4c2k"]
+script/source = "extends CharacterBody2D
+
+const NORMALSPEED = 110
+const JUMP_VELOCITY = -250.0
+
+#bullet time vars
+var can_bullet_time = true
+var is_bullet_time = false
+
+@onready var sprite: Sprite2D = $Sprite2D
+
+func _physics_process(delta):
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if Input.is_action_just_pressed(\"jump\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	if Input.is_action_just_pressed(\"super jump\"):
+		velocity.y = JUMP_VELOCITY
+
+	if Input.is_action_just_pressed(\"Restart\"):
+		get_tree().reload_current_scene()
+
+	var direction := Input.get_axis(\"left\", \"right\")
+
+	if direction > 0:
+		$AnimatedSprite2D.play(\"Right\")
+	elif direction < 0:
+		$AnimatedSprite2D.play(\"Left\")
+	
+	if direction:
+		
+		velocity.x = direction * NORMALSPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, NORMALSPEED)
+
+	move_and_slide()
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"Bullet Time\"):
+			if Engine.time_scale >= 1:
+				Engine.time_scale = 0.3
+				$CanBulletTime.start
+				$BulletTime.start
+				can_bullet_time = false
+			else: 
+				Engine.time_scale = 1
+
+func _on_can_bullet_time_timeout():
+	can_bullet_time = true
+
+func _on_bullet_time_timeout():
+	Engine.time_scale = 1
+	
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjpm0"]
+size = Vector2(7.86117, 7.86656)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bele4"]
+atlas = ExtResource("2_ux70b")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r2up"]
+atlas = ExtResource("3_ra52d")
+region = Rect2(0, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmdp0"]
+atlas = ExtResource("2_ux70b")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7oww7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bele4")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r2up")
+}],
+"loop": true,
+"name": &"New Skin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmdp0")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 9
+collision_mask = 9
+script = SubResource("GDScript_f4c2k")
+
+[node name="Gun" parent="." instance=ExtResource("2_0qw11")]
+
+[node name="Gun" parent="Gun" index="0"]
+position = Vector2(10.5239, -1.54717)
+
+[node name="Marker2D" parent="Gun" index="1"]
+position = Vector2(17.4963, -3.24135)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0.0694149, -0.000111938)
+shape = SubResource("RectangleShape2D_fjpm0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7oww7")
+animation = &"Right"
+
+[node name="Camera" type="Camera2D" parent="."]
+limit_smoothed = true
+position_smoothing_speed = 2.0
+
+[node name="BulletTime" type="Timer" parent="."]
+one_shot = true
+
+[node name="CanBulletTime" type="Timer" parent="."]
+wait_time = 15.0
+
+[connection signal="timeout" from="BulletTime" to="." method="_on_bullet_time_timeout"]
+[connection signal="timeout" from="CanBulletTime" to="." method="_on_can_bullet_time_timeout"]
+
+[editable path="Gun"]

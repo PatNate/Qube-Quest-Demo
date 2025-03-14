@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=3 uid="uid://bafhq2mmtos23"]
+
+[ext_resource type="Script" path="res://scripts/title_screen.gd" id="1_iocu0"]
+[ext_resource type="Texture2D" uid="uid://cqreuf0jd6ejj" path="res://assets/sprites/Play Button.png" id="2_lwtlf"]
+[ext_resource type="Texture2D" uid="uid://c3em8fxmq4efe" path="res://assets/sprites/title screen.png" id="3_ygfyy"]
+[ext_resource type="FontFile" uid="uid://uw7uomxtysd5" path="res://assets/fonts/alagard.ttf" id="4_1hr16"]
+[ext_resource type="Texture2D" uid="uid://baga80kl6foci" path="res://assets/sprites/Popup.png" id="5_i0hki"]
+[ext_resource type="LabelSettings" uid="uid://bgqp6l6txg7dr" path="res://assets/LabelSettings/Control Label Settings.tres" id="6_vvk8m"]
+
+[sub_resource type="Theme" id="Theme_ap4kc"]
+default_font = ExtResource("4_1hr16")
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_yirjg"]
+default_font = ExtResource("4_1hr16")
+default_font_size = 16
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iocu0")
+
+[node name="StartButton" type="Button" parent="."]
+z_index = 26
+layout_mode = 0
+offset_left = 451.0
+offset_top = 362.0
+offset_right = 715.0
+offset_bottom = 498.0
+icon = ExtResource("2_lwtlf")
+metadata/_edit_lock_ = true
+
+[node name="TitleScreen" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(573, 365)
+texture = ExtResource("3_ygfyy")
+metadata/_edit_lock_ = true
+
+[node name="Tutorial" type="Button" parent="."]
+modulate = Color(1, 0.760784, 0.0980392, 1)
+z_index = 2
+layout_mode = 0
+offset_left = 944.0
+offset_top = 26.0
+offset_right = 1132.0
+offset_bottom = 79.0
+theme = SubResource("Theme_ap4kc")
+text = "Tutorial
+"
+flat = true
+
+[node name="Window" type="Window" parent="."]
+title = "Controls"
+initial_position = 1
+size = Vector2i(1008, 486)
+visible = false
+unresizable = true
+borderless = true
+theme = SubResource("Theme_yirjg")
+
+[node name="X" type="Button" parent="Window"]
+z_index = 32
+offset_left = 956.894
+offset_top = 12.3735
+offset_right = 994.894
+offset_bottom = 50.3735
+text = "     
+      "
+flat = true
+
+[node name="Camera2D" type="Camera2D" parent="Window"]
+enabled = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Window"]
+texture = ExtResource("5_i0hki")
+centered = false
+
+[node name="Controls1" type="Label" parent="Window/Sprite2D"]
+visibility_layer = 2
+offset_left = 123.934
+offset_top = 129.325
+offset_right = 739.934
+offset_bottom = 189.325
+text = "W & D or <&> to Walk"
+label_settings = ExtResource("6_vvk8m")
+
+[node name="Controls2" type="Label" parent="Window/Sprite2D"]
+visibility_layer = 2
+offset_left = 157.608
+offset_top = 265.143
+offset_right = 549.608
+offset_bottom = 382.143
+text = "W, Space or ^
+to Jump"
+label_settings = ExtResource("6_vvk8m")
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="button_down" from="Tutorial" to="." method="_on_tutorial_button_down"]
+[connection signal="pressed" from="Window/X" to="." method="_on_x_pressed"]

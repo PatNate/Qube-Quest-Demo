@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=3 uid="uid://wo7ru8fps7to"]
+
+[ext_resource type="Texture2D" uid="uid://csvseiy6gwcmt" path="res://assets/Player.png" id="1_lv8gr"]
+[ext_resource type="PackedScene" uid="uid://b1mt8wq6682mq" path="res://scenes/gun.tscn" id="2_0qw11"]
+
+[sub_resource type="GDScript" id="GDScript_f4c2k"]
+script/source = "extends CharacterBody2D
+
+const SPEED = 110.0
+const JUMP_VELOCITY = -250.0
+var DASH_SPEED = 4
+var is_dashing = false
+
+@onready var sprite: Sprite2D = $Sprite2D
+
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if Input.is_action_just_pressed(\"jump\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	if Input.is_action_just_pressed(\"super jump\"):
+		velocity.y = JUMP_VELOCITY
+
+	if Input.is_action_just_pressed(\"Restart\"):
+		get_tree().reload_current_scene()
+
+	var direction := Input.get_axis(\"left\", \"right\")
+		
+	if Input.is_action_just_pressed(\"Dash\"):
+		if !is_dashing and direction:
+			start_dash()
+
+
+	if direction > 0:
+		sprite.flip_h = false
+	elif direction < 0:
+		sprite.flip_h = true
+	
+	if direction:
+		if is_dashing:
+			velocity.x = direction * SPEED * DASH_SPEED
+		else: 
+			velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+
+func start_dash():
+	is_dashing = true 
+	$DashTimer.connect(\"timeout\", stop_dash)
+	$DashTimer.start()
+	
+
+func stop_dash():
+	is_dashing = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjpm0"]
+size = Vector2(8, 8)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 9
+collision_mask = 9
+script = SubResource("GDScript_f4c2k")
+
+[node name="Gun" parent="." instance=ExtResource("2_0qw11")]
+
+[node name="Gun" parent="Gun" index="0"]
+position = Vector2(10.5239, -1.54717)
+
+[node name="Marker2D" parent="Gun" index="1"]
+position = Vector2(17.4963, -3.24135)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lv8gr")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fjpm0")
+
+[node name="Camera" type="Camera2D" parent="."]
+limit_smoothed = true
+position_smoothing_speed = 2.0
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[editable path="Gun"]
